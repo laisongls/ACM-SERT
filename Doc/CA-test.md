@@ -17,3 +17,11 @@
 `oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts": {"namedCertificates": [{"names": ["api.qe6-vmware-ibm.install.dev09.red-chesterfield.com"], "servingCertificate": {"name": "test-ca"}}]}}}'`
 ### 7. wait at least 15 minutes for apiserver to restart
 `oc get pods -n openshift-kube-apiserver`
+
+### Troubleshooting: if the hub cluster only has one master node, the managedcluster may get offline. Recover the managedcluster by replacing bootstrap.
+1. get import yaml from hub cluster
+`oc login <hubcluster>`
+`oc get secret -n <cluster_name> <cluster_name>-import -ojsonpath='{.data.import\.yaml}' | base64 --decode  > import.yaml`
+3. apply the import yaml to the managedcluster
+`oc login <managedcluster>`
+`oc apply -f import.yaml`
