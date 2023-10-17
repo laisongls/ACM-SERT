@@ -14,24 +14,23 @@ openssl req -new -sha256 -key rootca.key -out intermediateca.csr -subj "/C=CN/L=
 ```
 openssl req -nodes -x509 -newkey rsa:4096 -in intermediateca.csr -keyout key.pem -out cert.pem -days 365 -addext "subjectAltName = DNS:api.qe6-vmware-ibm.install.dev09.red-chesterfield.com" -subj "/C=CN/L=F/O=ACM/OU=QE/CN=*.dev09.red-chesterfield.com"
 ```
-
-6. login hub cluster
+5. login hub cluster
 ```
 oc login -u kubeadmin -p XFFfk-UJoQS-zz5Yb-WUwhE --server=https://api.qe6-vmware-ibm.install.dev09.red-chesterfield.com:6443
 ```
-8. create a secret that contains cert and key
+6. create a secret that contains cert and key
 ```
 oc create secret tls test-ca --cert=cert.pem --key=key.pem -n openshift-config
 ```
-10. update the api server to reference the created secret
+7. update the api server to reference the created secret
 ```
 oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts": {"namedCertificates": [{"names": ["api.qe6-vmware-ibm.install.dev09.red-chesterfield.com"], "servingCertificate": {"name": "test-ca"}}]}}}'
 ```
-12. wait at least 15 minutes for apiserver to restart
+8. wait at least 15 minutes for apiserver to restart
 ```
 oc get pods -n openshift-kube-apiserver
 ```
-14. check the managedcluster status
+9. check the managedcluster status
 ```
 oc get mcl
 ```
