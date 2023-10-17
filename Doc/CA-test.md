@@ -3,7 +3,7 @@
 ###
 
 1. create a root ca private key
-`openssl genrsa -out rootca.key 4096`
+```openssl genrsa -out rootca.key 4096```
 2. generate a csr
 `openssl req -new -sha256 -key rootca.key -out intermediateca.csr -subj "/C=CN/L=F/O=ACM/OU=QE/CN=*.dev09.red-chesterfield.com"`
 3. request key for the csr
