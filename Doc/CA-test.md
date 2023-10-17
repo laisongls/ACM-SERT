@@ -7,7 +7,7 @@
 ### generate a csr
 `openssl req -new -sha256 -key rootca.key -out intermediateca.csr -subj "/C=CN/L=F/O=ACM/OU=QE/CN=*.dev09.red-chesterfield.com"`
 ### request key for the csr
-```openssl req -nodes -x509 -newkey rsa:4096 -in intermediateca.csr -keyout key.pem -out cert.pem -days 365 -addext "subjectAltName = DNS:api.qe6-vmware-ibm.install.dev09.red-chesterfield.com" -subj "/C=CN/L=F/O=ACM/OU=QE/CN=*.dev09.red-chesterfield.com"```
+`openssl req -nodes -x509 -newkey rsa:4096 -in intermediateca.csr -keyout key.pem -out cert.pem -days 365 -addext "subjectAltName = DNS:api.qe6-vmware-ibm.install.dev09.red-chesterfield.com" -subj "/C=CN/L=F/O=ACM/OU=QE/CN=*.dev09.red-chesterfield.com"`
 
 ### login hub cluster
 `oc login -u kubeadmin -p XFFfk-UJoQS-zz5Yb-WUwhE --server=https://api.qe6-vmware-ibm.install.dev09.red-chesterfield.com:6443`
